@@ -1,0 +1,55 @@
+<section class="form-test">
+  <form [formGroup]="userForm" class="form-test__form">
+    <div class="form-test__form__container">
+      <label class="form-test__form__container-label" for="name">Nombre</label>
+      <input
+        class="form-test__form__container-text"
+        type="text"
+        name="name"
+        id="name"
+        formControlName="name"
+      />
+    </div>
+    <div class="form-test__form__container">
+      <label class="form-test__form__container-label" for="email">Email</label>
+      <input
+        class="form-test__form__container-text"
+        type="email"
+        name="email"
+        id="email"
+        formControlName="email"
+      />
+    </div>
+    <button class="form-test__form-button" (click)="onSaveUser()">ENVIAR</button>
+    <span>
+      <p>{{ userForm.value | json }}</p>
+      <p>{{ userForm.valid }}</p>
+    </span>
+  </form>
+
+  <div class="form-test__filter">
+    <button class="form-test__filter-button" (click)="onGetUser()">OBTENER USUARIOS</button>
+    <div class="form-test__filter__container">
+      <label for="filter">Filtrar</label>
+      <input type="text" name="filter" id="filter" [formControl]="filterField" />
+    </div>
+    <table class="form-test__filter__table">
+      <thead class="form-test__filter__table__header">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody class="form-test__filter__table__body">
+        <ng-container *ngFor="let user of users | filter : filterField?.value">
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</section>
