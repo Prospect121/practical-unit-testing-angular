@@ -58,7 +58,7 @@ describe('FormTestComponent', () => {
     ];
     userServiceSpy.get.and.returnValue(of(users));
 
-    component.onGetUser();
+    (component as any)?._getUser();
 
     expect(userServiceSpy.get).toHaveBeenCalled();
     expect(component.users).toEqual(users);
@@ -76,12 +76,17 @@ describe('FormTestComponent', () => {
 
   it('should call onGetUser() when the button is clicked', () => {
     const button = fixture.debugElement.query(By.css('.form-test__filter-button')).nativeElement;
-
-    spyOn(component, 'onGetUser');
+    const users = [
+      { name: 'User 1', email: 'user1@example.com' },
+      { name: 'User 2', email: 'user2@example.com' },
+    ];
+    userServiceSpy.get.and.returnValue(of(users));
+    //spyOn(component, 'onGetUser');
 
     button.click();
 
-    expect(component.onGetUser).toHaveBeenCalled();
+    expect(userServiceSpy.get).toHaveBeenCalled();
+    expect(component.users).toEqual(users);
   });
 
   it('should unsubscribe from subscriptions on destroy', () => {
